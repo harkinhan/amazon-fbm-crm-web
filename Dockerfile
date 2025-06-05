@@ -6,12 +6,12 @@ WORKDIR /app
 
 # 复制根目录的package.json并安装依赖
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 # 构建前端
 COPY client/ ./client/
 WORKDIR /app/client
-RUN npm ci --only=production
+RUN npm install
 RUN npm run build
 
 # 构建后端
@@ -27,7 +27,7 @@ FROM node:18-alpine AS production
 # 安装生产依赖
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # 创建应用用户
 RUN addgroup -g 1001 -S nodejs
