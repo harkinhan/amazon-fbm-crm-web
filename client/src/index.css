@@ -1,0 +1,544 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
+
+@layer base {
+  html {
+    font-family: 'SF Pro Display', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+  }
+
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Apple-style buttons */
+  .btn {
+    @apply px-6 py-3 rounded-2xl font-medium transition-all duration-300 focus:outline-none relative overflow-hidden;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    backdrop-filter: blur(10px);
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white;
+    background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0056CC 0%, #4338CA 100%);
+  }
+  
+  .btn-secondary {
+    @apply bg-white/80 text-gray-700 border border-gray-200/50;
+    backdrop-filter: blur(20px);
+  }
+  
+  .btn-secondary:hover {
+    @apply bg-white/90 border-gray-300/50;
+  }
+  
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-500 to-red-600 text-white;
+    background: linear-gradient(135deg, #FF3B30 0%, #FF2D92 100%);
+  }
+
+  .btn-danger:hover {
+    background: linear-gradient(135deg, #D70015 0%, #E91E63 100%);
+  }
+
+  /* Apple-style inputs */
+  .input {
+    @apply w-full px-4 py-3 bg-white/70 border border-gray-200/50 rounded-2xl 
+           focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500/50
+           backdrop-blur-xl transition-all duration-300 placeholder-gray-400;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .input:focus {
+    @apply bg-white/90;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+  }
+
+  /* Apple-style cards */
+  .card {
+    @apply bg-white/70 rounded-3xl border border-gray-200/50 backdrop-blur-xl transition-all duration-300;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+
+  .card:hover {
+    @apply bg-white/80;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* Apple-style glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  /* Apple-style sidebar */
+  .sidebar {
+    @apply bg-white/90 backdrop-blur-xl border-r border-gray-200/50;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Apple-style navigation items */
+  .nav-item {
+    @apply flex items-center px-4 py-3 mx-2 text-sm font-medium rounded-2xl transition-all duration-300 relative;
+  }
+
+  .nav-item:hover {
+    @apply bg-gray-100/70;
+    transform: translateX(4px);
+  }
+
+  .nav-item.active {
+    @apply bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-600;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  }
+
+  .nav-item.active::before {
+    content: '';
+    @apply absolute left-0 top-1/2 w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-r-full;
+    transform: translateY(-50%);
+  }
+
+  /* Collapsed sidebar navigation styles */
+  .nav-item.justify-center:hover {
+    transform: none;
+  }
+
+  .nav-item.justify-center.active::before {
+    @apply left-1/2 w-2 h-2 rounded-full;
+    transform: translateX(-50%) translateY(200%);
+  }
+
+  /* Apple-style table */
+  .table-container {
+    @apply bg-white/70 rounded-3xl backdrop-blur-xl border border-gray-200/50;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    max-height: 75vh; /* 设置合适的高度，确保能在一个屏幕内显示 */
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 表格滚动区域 */
+  .table-scroll-area {
+    max-height: calc(75vh - 2px);
+    overflow-y: auto; /* 恢复垂直滚动 */
+    overflow-x: auto;
+    position: relative;
+    /* 确保滚动流畅 */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .table-header {
+    position: sticky; /* 恢复固定定位 */
+    top: 0;
+    z-index: 20;
+    background: rgba(249, 250, 251, 0.98);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid rgba(229, 231, 235, 0.8);
+  }
+
+  .table-header th {
+    background: rgba(249, 250, 251, 0.98);
+    backdrop-filter: blur(15px);
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    height: 60px;
+    vertical-align: middle;
+    white-space: nowrap; /* 防止表头文字换行 */
+  }
+
+  .table-row {
+    @apply transition-all duration-300 hover:bg-blue-50/60;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .table-row:hover {
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(147, 51, 234, 0.03) 100%);
+  }
+
+  /* 移除发光边框效果，因为它会影响对齐 */
+  .table-row:hover::before {
+    display: none;
+  }
+
+  /* 增强悬停时冻结列的效果 */
+  .table-row:hover .sticky-column {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 51, 234, 0.04) 100%);
+    box-shadow: 2px 0 6px rgba(59, 130, 246, 0.12);
+  }
+
+  /* 悬停时操作按钮的轻微增强效果 */
+  .table-row:hover .action-button {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-row td {
+    padding: 1rem 1.5rem;
+    vertical-align: top;
+    min-height: 60px; /* 确保最小高度一致 */
+  }
+
+  /* 冻结列样式 */
+  .sticky-column {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    max-width: 200px;
+    /* 确保内容不溢出 */
+    overflow: hidden;
+  }
+
+  .sticky-column-header {
+    position: sticky;
+    left: 0;
+    top: 0; /* 恢复垂直固定 */
+    z-index: 30; /* 确保冻结列头部在最上层 */
+    background: rgba(249, 250, 251, 0.98);
+    backdrop-filter: blur(15px);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.1); /* 恢复完整阴影 */
+    min-width: 200px;
+    max-width: 200px;
+    border-bottom: 2px solid rgba(229, 231, 235, 0.8);
+    border-right: 2px solid rgba(229, 231, 235, 0.8);
+    font-weight: 600;
+    height: 60px;
+    vertical-align: middle;
+    /* 确保内容不溢出 */
+    overflow: hidden;
+  }
+
+  /* 表格水平滚动优化 */
+  .table-scroll-area::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .table-scroll-area::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+
+  .table-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  .table-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .table-scroll-area::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  /* Firefox滚动条优化 */
+  .table-scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+  }
+
+  .table-container .overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .table-container .overflow-x-auto::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+
+  .table-container .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  .table-container .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* 操作按钮样式优化 */
+  .action-button {
+    @apply relative p-1.5 rounded-lg transition-all duration-300;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .action-button:hover::after {
+    content: attr(title);
+    @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg whitespace-nowrap z-50;
+    animation: fadeIn 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .action-button:hover::before {
+    content: '';
+    @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 z-50;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  /* Apple-style modal */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm;
+  }
+
+  .modal-content {
+    @apply bg-white/95 rounded-3xl backdrop-blur-xl border border-gray-200/50;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 模态框固定头部和底部样式 */
+  .modal-header {
+    @apply flex items-center justify-between p-8 pb-6 border-b border-gray-200/50 bg-white/95 rounded-t-3xl backdrop-blur-xl;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .modal-footer {
+    @apply flex justify-end space-x-4 p-8 pt-6 border-t border-gray-200/50 bg-white/95 rounded-b-3xl backdrop-blur-xl;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .modal-content-area {
+    @apply flex-1 overflow-y-auto px-8 py-6;
+  }
+
+  /* Apple-style scrollbar */
+  .modal-content ::-webkit-scrollbar,
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .modal-content ::-webkit-scrollbar-track,
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+
+  .modal-content ::-webkit-scrollbar-thumb,
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+
+  .modal-content ::-webkit-scrollbar-thumb:hover,
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* 为Firefox浏览器优化滚动条 */
+  .modal-content,
+  .overflow-y-auto {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+  }
+
+  /* Apple-style dropdown */
+  .dropdown {
+    @apply bg-white/95 backdrop-blur-xl rounded-3xl border border-gray-200/50 overflow-hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .dropdown-item {
+    @apply px-4 py-3 text-sm text-gray-700 hover:bg-gray-50/70 transition-all duration-200 first:rounded-t-3xl last:rounded-b-3xl;
+  }
+
+  /* Apple-style status badges */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm;
+  }
+
+  .badge-success {
+    @apply bg-green-100/70 text-green-800 border border-green-200/50;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100/70 text-yellow-800 border border-yellow-200/50;
+  }
+
+  .badge-error {
+    @apply bg-red-100/70 text-red-800 border border-red-200/50;
+  }
+
+  .badge-info {
+    @apply bg-blue-100/70 text-blue-800 border border-blue-200/50;
+  }
+
+  /* Apple-style loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-4 border-gray-200/50 border-t-blue-500;
+  }
+
+  /* Apple-style search */
+  .search-container {
+    @apply relative;
+  }
+
+  .search-input {
+    @apply input pl-12;
+  }
+
+  .search-icon {
+    @apply absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400;
+  }
+
+  /* Apple-style form grid */
+  .form-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .form-group {
+    @apply space-y-2;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+
+  .form-field-full {
+    @apply sm:col-span-2 lg:col-span-3;
+  }
+
+  .form-field-half {
+    @apply lg:col-span-2;
+  }
+
+  /* Apple-style animations */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  /* Apple-style gradients */
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Responsive utilities */
+  @media (max-width: 768px) {
+    .btn {
+      @apply px-4 py-2 text-sm;
+    }
+    
+    .card {
+      @apply rounded-2xl;
+    }
+    
+    .modal-content {
+      @apply rounded-2xl mx-4;
+    }
+  }
+
+  /* 页面内表单样式 */
+  .inline-form-card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-left: 4px solid #3b82f6;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .inline-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  }
+
+  .inline-form-card:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* 响应式优化 */
+  @media (max-width: 768px) {
+    .inline-form-card {
+      padding: 1.5rem !important;
+      border-radius: 1rem;
+      margin: 0 -1rem; /* 扩展到屏幕边缘 */
+    }
+    
+    .inline-form-card .form-grid {
+      grid-template-columns: 1fr !important; /* 强制单列布局 */
+    }
+  }
+} 
