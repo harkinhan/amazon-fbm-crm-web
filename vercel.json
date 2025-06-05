@@ -1,19 +1,6 @@
 {
   "version": 2,
   "name": "amazon-fbm-crm",
-  "builds": [
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
@@ -31,5 +18,6 @@
     "server/index.ts": {
       "maxDuration": 30
     }
-  }
+  },
+  "buildCommand": "cd client && npm install && npm run build"
 } 
