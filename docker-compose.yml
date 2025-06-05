@@ -1,20 +1,55 @@
 version: '3.8'
 
 services:
+  # 应用服务
   app:
     build: .
-    ports:
-      - "0.0.0.0:3001:3001"
-      - "0.0.0.0:5173:5173"
-    volumes:
-      - ./uploads:/app/uploads
-      - ./database.sqlite:/app/database.sqlite
+    container_name: amazon-crm-app
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
       - PORT=3001
-    restart: unless-stopped
+      - JWT_SECRET=${JWT_SECRET:-your_jwt_secret_change_this}
+      - DATABASE_URL=/app/data/database.sqlite
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
     networks:
       - app-network
+    depends_on:
+      - redis
+
+  # Redis服务（用于会话存储和缓存）
+  redis:
+    image: redis:7-alpine
+    container_name: amazon-crm-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+  # Nginx反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: amazon-crm-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-cache:/var/cache/nginx
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+volumes:
+  redis-data:
+  nginx-cache:
 
 networks:
   app-network:
