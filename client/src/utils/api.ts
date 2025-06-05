@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+// 根据环境自动选择API基础URL
+const getBaseURL = () => {
+  // 生产环境：使用相对路径（Vercel自动处理）
+  if (process.env.NODE_ENV === 'production') {
+    return '/api';
+  }
+  // 开发环境：使用本地服务器
+  return 'http://localhost:3001/api';
+};
+
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },
