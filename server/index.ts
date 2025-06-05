@@ -69,20 +69,25 @@ app.use((req, res) => {
   res.status(404).json({ error: '接口不存在' });
 });
 
-// Initialize database and start server
-initDatabase()
-  .then(() => {
-    console.log('数据库初始化成功');
-    
-    const port = Number(config.port);
-    app.listen(port, '0.0.0.0', () => {
-      console.log(`服务器运行在端口 ${port}`);
-      console.log(`本地访问: http://localhost:${port}`);
-      console.log(`局域网访问: http://你的IP地址:${port}`);
-      console.log(`管理员账户: admin@crm.com / admin123`);
+// For Vercel deployment
+export default app;
+
+// Initialize database and start server (only in non-serverless environments)
+if (process.env.VERCEL !== '1') {
+  initDatabase()
+    .then(() => {
+      console.log('数据库初始化成功');
+      
+      const port = Number(config.port);
+      app.listen(port, '0.0.0.0', () => {
+        console.log(`服务器运行在端口 ${port}`);
+        console.log(`本地访问: http://localhost:${port}`);
+        console.log(`局域网访问: http://你的IP地址:${port}`);
+        console.log(`管理员账户: admin@crm.com / admin123`);
+      });
+    })
+    .catch((error) => {
+      console.error('数据库初始化失败:', error);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error('数据库初始化失败:', error);
-    process.exit(1);
-  }); 
+} 
