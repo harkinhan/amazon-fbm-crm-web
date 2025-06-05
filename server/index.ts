@@ -16,6 +16,9 @@ import userRoutes from './routes/users';
 
 const app = express();
 
+// Trust proxy for nginx reverse proxy
+app.set('trust proxy', 1);
+
 // Create uploads directory if it doesn't exist
 if (!fs.existsSync(config.uploadPath)) {
   fs.mkdirSync(config.uploadPath, { recursive: true });
