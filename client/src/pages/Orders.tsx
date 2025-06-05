@@ -614,11 +614,6 @@ export default function Orders() {
     // 更精确的值获取逻辑，避免把有意义的0当作空值处理
     const rawValue = formData[field.field_name];
     
-    // 调试信息 - 在开发环境中显示
-    if (process.env.NODE_ENV === 'development' && (rawValue === 0 || rawValue === '0')) {
-      console.log(`Field ${field.field_name} has value:`, rawValue, typeof rawValue);
-    }
-    
     // 对于不同类型的字段，使用不同的默认值处理策略
     let value;
     if (rawValue === undefined || rawValue === null) {

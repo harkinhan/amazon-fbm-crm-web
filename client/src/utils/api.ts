@@ -3,7 +3,7 @@ import axios from 'axios';
 // 根据环境自动选择API基础URL
 const getBaseURL = () => {
   // 生产环境：使用相对路径（Vercel自动处理）
-  if (process.env.NODE_ENV === 'production') {
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
     return '/api';
   }
   // 开发环境：使用本地服务器
